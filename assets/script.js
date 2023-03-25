@@ -16,19 +16,29 @@ $(function () {
   // current hour in 24-hour time?
 
   var currentHour = dayjs().format("H");
+  var timeBlocksContainer = document.getElementById("timeBlocksContainer");
+  var timeBlocks = $(timeBlocksContainer).children('.time-block');
+  //var timeBlocks = $("div").children('time-block');
+  console.log(timeBlocks);
   console.log("The current hour is: " +currentHour);
   //for each hour row, check the id tag against the current hour from the 24 clock from dayjs
-  for (h=9; h<6; h++) {
+  for (i=0; i<timeBlocks.length; i++) {
+    
   //grab a row using the id tag with the hour //better to target a parent class, and then traverse parent, child, sibling
-    var hourRow = document.getElementById("hour-"+h); //maybe use children[i] DOM traversal instead or target specific siblings through  Jquery
-  //if the id tag for the hour row is earlier than the current hour, assign ".past" class
-    if(h<currentHour) {
-      hourRow;
+    var timeBlock = timeBlocks[i]; //maybe use children[i] DOM traversal instead or target specific siblings through  Jquery
+    var timeBlockhour = i+9;
+    //if the id tag for the hour row is earlier than the current hour, assign ".past" class
+    if(timeBlockhour<currentHour) {
+      timeBlock.setAttribute("class", "past");
     }
   //if the id tag for the hour row is earlier than the current hour, assign ".past" class
-
+    if(timeBlockhour===currentHour) {
+    timeBlock.setAttribute("class", "present");
+  }
   //if the id tag for the hour row is earlier than the current hour, assign ".past" class
-
+    if(timeBlockhour>currentHour) {
+    timeBlock.setAttribute("class", "future");
+  }
   }
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
@@ -39,5 +49,5 @@ $(function () {
   //code to display the current date in the header of the page.
   var today = dayjs();  //declare a variable and call dayjs to fetch the current date
   $('#currentDay').text(today.format("dddd, MMMM D")); //format the date and set the text in the header to the current date
-  console.log(today);
+  //console.log(today);
 });
