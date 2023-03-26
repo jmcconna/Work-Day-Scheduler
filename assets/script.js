@@ -2,12 +2,33 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
+
+  //A reference to the parent DOM of the timeBlocks (which contain textareas and buttons)
+  var timeBlocksContainer = document.getElementById("timeBlocksContainer");
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
+
+  //add event listener to every save button
+  var saveButtons = $(timeBlocksContainer).children().children('.saveBtn');
+  console.log(saveButtons);
+  for (i=0; i<saveButtons.length; i++) {
+  saveButtons[i].addEventListener("click", function() {
+    //find the parent <div> of the button to grab the "hour-x" id
+    console.log("This is: "+ this);
+    var hourId = $(this).parent().attr("id");
+    console.log(hourId);
+    
+  })};
+  
+
+
+  //use the "hour-x" id as the key to save the text in textarea to local storage
+
   //
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
@@ -15,31 +36,30 @@ $(function () {
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
 
+  //grab the current hour of the day
   var currentHour = dayjs().format("H");
-  var timeBlocksContainer = document.getElementById("timeBlocksContainer");
+ 
+  //create an array of all the timeBlock HTML elements
   var timeBlocks = $(timeBlocksContainer).children('.time-block');
-  //var timeBlocks = $("div").children('time-block');
   console.log(timeBlocks);
-  console.log("The current hour is: " +currentHour);
-  //for each hour row, check the id tag against the current hour from the 24 clock from dayjs
+  //for each timeBlock, check the id tag against the current hour from the 24 clock from dayjs
   for (i=0; i<timeBlocks.length; i++) {
-    
-  //grab a row using the id tag with the hour //better to target a parent class, and then traverse parent, child, sibling
+    //grab a row using the id tag with the hour //better to target a parent class, and then traverse parent, child, sibling
     var timeBlock = timeBlocks[i]; //maybe use children[i] DOM traversal instead or target specific siblings through  Jquery
     var timeBlockhour = i+9;
     //if the id tag for the hour row is earlier than the current hour, assign ".past" class
     if(timeBlockhour<currentHour) {
       timeBlock.setAttribute("class", "row time-block past");
     }
-  //if the id tag for the hour row is earlier than the current hour, assign ".past" class
+    //if the id tag for the hour row is earlier than the current hour, assign ".past" class
     if(timeBlockhour===currentHour) {
-    timeBlock.children[1].setAttribute("class", "row time-block present");
-  }
-  //if the id tag for the hour row is earlier than the current hour, assign ".past" class
+    timeBlock.setAttribute("class", "row time-block present");
+    }
+    //if the id tag for the hour row is earlier than the current hour, assign ".past" class
     if(timeBlockhour>currentHour) {
-    timeBlock.children[1].setAttribute("class", "row time-block future");
-  }
-  }
+    timeBlock.setAttribute("class", "row time-block future");
+    }
+  };
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
