@@ -22,7 +22,7 @@ $(function () {
     console.log("This is: "+ this);
     var hourId = $(this).parent().attr("id");
     console.log(hourId);
-    
+    //TODO: save the textarea textContent using the hourId as the key
   })};
   
 
