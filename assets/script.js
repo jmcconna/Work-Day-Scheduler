@@ -46,7 +46,7 @@ $(function () {
       timeBlock.setAttribute("class", "row time-block past");
     }
     //if the id tag for the hour row is earlier than the current hour, assign ".past" class
-    if(timeBlockhour===currentHour) {
+    if(timeBlockhour==currentHour) {
     timeBlock.setAttribute("class", "row time-block present");
     }
     //if the id tag for the hour row is earlier than the current hour, assign ".past" class
